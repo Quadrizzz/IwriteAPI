@@ -1,0 +1,38 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+#test-container{
+    background-color: red;
+    height: 400px;
+    width: 500px;
+    margin-top: 50px;
+    margin-left: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+#test-container div{
+    margin-bottom: 20px;
+    height: 100px;
+    background-color: transparent;
+}
+
+#svg2{
+    transform: translate(100,200);
+}
+
+#text{
+    margin-bottom: 20px;
+    height: 100px;
+    background-color: red
+}
+
+#bottom{
+    /* margin-bottom: 20px; */
+    height: 50px;
+    background-color: red;
+}
