@@ -12,19 +12,20 @@ const register = (req, res, database, bcrypt)=>{
         password: hash
     })
     .catch(err => {
-        res.status(400).json(err)
+        return res.status(400).json(err)
     })
     .then( () =>{ return database('login').insert({
         penname: req.body.penname,
         password: hash
     })}
     )
-    .then( database.select().from('users')
+    .then( database.select().from('users').where('email',`${req.body.email}`)
             .then((users)=> {
                 return res.json(users)
             }))
     .catch(err => {
-        res.status(400).json(err)
+        console.log(err)
+        return res.status(400).json(err)
     })
 
 
