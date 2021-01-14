@@ -1,14 +1,18 @@
 const express = require('express');
+const fetch = require('node-fetch')
 const bodyParser = require('body-parser')
 const fileUpload  = require('express-fileupload');
+const FormData = require('form-data')
 const getprofile = require('./getprofile')
 const cors = require('cors');
 const upload = require('./upload')
+const profileimage = require('./profileimage')
 const login = require('./login')
 const register = require('./regitser')
 const validate = require('./validateUpload')
 const knex = require('knex')
-const bcrypt = require('bcrypt-nodejs')
+const bcrypt = require('bcrypt-nodejs');
+const { response } = require('express');
 
 const database = knex({
     client : 'pg',
@@ -45,6 +49,10 @@ server.post('/validateUpload' , (req,res)=>{
 
 server.post('/getprofile', (req,res)=>{
     getprofile.getprofile(req,res,database)
+})
+
+server.post('/profileimage', (req, res)=>{
+    profileimage.profileimage(req, res, database, fetch, FormData)
 })
 
 server.listen(5000 , ()=>{
