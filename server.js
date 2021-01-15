@@ -1,8 +1,7 @@
 const express = require('express');
-const fetch = require('node-fetch')
+// const fetch = require('node-fetch')
 const bodyParser = require('body-parser')
 const fileUpload  = require('express-fileupload');
-const FormData = require('form-data')
 const getprofile = require('./getprofile')
 const cors = require('cors');
 const upload = require('./upload')
@@ -52,7 +51,7 @@ server.post('/getprofile', (req,res)=>{
 })
 
 server.post('/profileimage', (req, res)=>{
-    profileimage.profileimage(req, res, database, fetch, FormData)
+    profileimage.profileimage(req, res, database)
 })
 
 server.listen(5000 , ()=>{
