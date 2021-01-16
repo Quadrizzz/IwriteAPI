@@ -5,20 +5,21 @@ const profileimage = (req, res, database)=>{
         res.status(400).json("Invalid")
     }
     else{
+        console.log(url)
+        console.log(id)
         database('users')
         .where('id', `${id}`)
-        .returning('*')
-        .update({
-            profileimage : url
-            })
-            .then((user)=>{
-                if(user[0]){
-                    res.json('successful')
-                }
-            })
-            .catch(err => {
-                res.json(err)
-            })
+        .update(
+            'profileimage' , `${url}`
+        )
+        .returning('profileimage')
+        .then((profileimage)=>{           
+            res.json(profileimage)
+            
+        })
+        .catch(err => {
+            res.json(err)
+        })
 
     }
 }
