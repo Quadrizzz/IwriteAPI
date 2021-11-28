@@ -50,6 +50,10 @@ server.post('/getprofile', (req,res)=>{
     getprofile.getprofile(req,res,database)
 })
 
+server.post('/upload' , (req,res)=>{
+    upload.upload(req,res,database)
+})
+
 server.put('/profileimage', (req, res)=>{
     profileimage.profileimage(req, res, database)
 })

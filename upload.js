@@ -1,26 +1,40 @@
 
-const upload = (req , res , db)=>{
+const upload = (req , res , database)=>{
     if(req.body.url === null){
         return res.status(400).json('Invalid Request')
     }
 
-    // if(req.body.penname !== db.writers[0].penname){
-    //     return res.status(400).json('signup to be writer')
-    // }
+    database.transaction(trx => {
+        trx.insert({
+            name : req.body.bookName,
+            cover: "random",
+            author : req.body.Author,
+            userpenname: req.body.Name,
+            added: new Date(),
+            likes: 0,
+            downloadlink : req.body.url,
+            genre: req.body.genre
+        })
+        .into('books')
+        .returning('userpenname')
+        .then((retPenname)=>{
+            console.log(retPenname);
+            return database.from('users')
+            .where('penname', '=', retPenname[0])
+            .increment('uploads', 1)
+            .returning('*')
+            .then((user) => {
+                res.json(user[0])
+            })
+            
+        })
+        .then(trx.commit)
+        .catch(trx.rollback)
 
-    const url = req.body.url
-    const id = req.body.id
-    db.files.push({
-        id : id,
-        url : url
-    }, err=>{
-        if(err){
-            console.log(err)
-           return res.status(500).json("Error uploading file")
-        }
     })
-
-    res.json(db.files)
+    .catch((err)=>{
+        res.json(err)
+    })
 
 
 }
