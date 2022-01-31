@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser')
 const fileUpload  = require('express-fileupload');
 const getprofile = require('./getprofile')
+const getBooks = require('./getbooks')
 const cors = require('cors');
 const upload = require('./upload')
 const profileimage = require('./profileimage')
@@ -12,6 +13,9 @@ const validate = require('./validateUpload')
 const knex = require('knex')
 const bcrypt = require('bcrypt-nodejs');
 const { response } = require('express');
+const req = require('express/lib/request');
+const like = require('./like');
+const download  = require('./download');
 
 const database = knex({
     client : 'pg',
@@ -56,6 +60,18 @@ server.post('/upload' , (req,res)=>{
 
 server.put('/profileimage', (req, res)=>{
     profileimage.profileimage(req, res, database)
+})
+
+server.get('/getbooks', (req,res)=>{
+    getBooks.getBooks(req,res,database)
+})
+
+server.post('/like', (req,res)=>{
+    like.like(req,res,database)
+})
+
+server.post('/download', (req,res)=>{
+    download.download(req,res,database)
 })
 
 server.listen(5000 , ()=>{
